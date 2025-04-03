@@ -124,7 +124,7 @@ def train(
 
         if coresets:
             print("Coreset fine-tune")
-            model_finetune = model.copy()
+            model_finetune = model.copy().to(device)
             opti_finetune = torch.optim.Adam(model_finetune.parameters(), 0.001)
 
             model_finetune = training(model_finetune, 

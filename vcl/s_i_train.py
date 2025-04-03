@@ -97,7 +97,13 @@ def training(model: SIMLP,
     return model, omegas, prior_parameters
 
 
-def train(model: SIMLP, num_epochs: int, num_tasks: int, coresets: bool = False, num_epochs_coreset: int = 100):
+def train(model: SIMLP,
+          num_epochs: int,
+          num_tasks: int,
+          coresets: bool = False,
+          num_epochs_coreset: int = 100,
+          verbose=False,
+):
     device = 'cuda' if next(model.parameters()).is_cuda else 'cpu'
 
     opti = torch.optim.Adam(model.parameters(), 0.001)
@@ -114,7 +120,15 @@ def train(model: SIMLP, num_epochs: int, num_tasks: int, coresets: bool = False,
 
     for task_id, (trainloader, _) in enumerate(dataloaders):
 
-        model, omegas, prior_params = training(model, opti, trainloader, prior_params, omegas, num_epochs, device=device)
+        model, omegas, prior_params = training(model,
+                                               opti,
+                                               trainloader,
+                                               prior_params,
+                                               omegas, num_epochs,
+                                               use_tqdm=not verbose,
+                                               verbose=verbose,
+                                               device=device
+                                                )
 
         avg_acc = validation(model, dataloaders, nb_tasks=task_id+1, device=device)
         avg_accs.append(avg_acc)
@@ -147,5 +161,6 @@ if __name__ == '__main__':
         num_tasks=5,
         coresets=False,
         num_epochs_coreset=10,
+        verbose=True,
     )
     print(avg_accs)
