@@ -36,7 +36,7 @@ def sampling(
     f, ax = plt.subplots(nb_tasks, nb_samples)
     for task_id in range(nb_tasks):
         if nb_tasks > 1:
-            ax[task_id, 0].set_ylabel(f"Task {task_id}", rotation=0)
+            ax[task_id, 0].set_ylabel(f"Task {task_id}", rotation=0, labelpad=20)
         out = model.sample(nb_samples, task_id)
         for sample in range(nb_samples):
             if nb_tasks == 1:
@@ -48,8 +48,10 @@ def sampling(
                 ax[task_id, sample].set_xticks([])
                 ax[task_id, sample].set_yticks([])
     if save_fig:
+        f.tight_layout()
         f.savefig(f"graphics/sample{nb_tasks}.png")
     else:
+        f.tight_layout()
         f.show()
 
 def training(model: VAE,
