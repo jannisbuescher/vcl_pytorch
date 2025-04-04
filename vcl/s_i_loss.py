@@ -48,7 +48,7 @@ def compute_omega(
         for i, (param_nu_i, param_nu_prev_i, omega_nu_i) in enumerate(zip(param_nu, param_nu_prev, omega_nu)):
             delta = torch.square(param_nu_i - param_nu_prev_i)
             if len(Omega) <= i:
-                Omega.append(omega_nu_i / (delta + 1e-9))
+                Omega.append(omega_nu_i / (delta + 1e-5))
             else:
-                Omega[i] += omega_nu_i / (delta + 1e-9)
+                Omega[i] += omega_nu_i / (delta + 1e-5)
     return Omega

@@ -29,8 +29,8 @@ class VariationalLinear(nn.Module):
         eps_weights = torch.normal(torch.zeros_like(self.W_mu), torch.ones_like(self.W_mu))
         eps_bias = torch.normal(torch.zeros_like(self.b_mu), torch.ones_like(self.b_mu))
 
-        weights = self.W_mu + eps_weights * torch.exp(self.W_logsigma)
-        bias = self.b_mu + eps_bias * torch.exp(self.b_logsigma)
+        weights = self.W_mu + eps_weights * torch.exp(0.5 * self.W_logsigma)
+        bias = self.b_mu + eps_bias * torch.exp(0.5 * self.b_logsigma)
 
         return x @ weights + bias
     
