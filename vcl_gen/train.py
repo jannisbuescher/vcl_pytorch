@@ -40,9 +40,13 @@ def sampling(
         out = model.sample(nb_samples, task_id)
         for sample in range(nb_samples):
             if nb_tasks == 1:
-                ax[sample].imshow(out[sample].detach().view(28, 28))
+                ax[sample].imshow(out[sample].cpu().detach().view(28, 28))
+                ax[sample].set_xticks([])
+                ax[sample].set_yticks([]) 
             else:
-                ax[task_id, sample].imshow(out[sample].detach().view(28, 28))
+                ax[task_id, sample].imshow(out[sample].cpu().detach().view(28, 28))
+                ax[task_id, sample].set_xticks([])
+                ax[task_id, sample].set_yticks([])
     if save_fig:
         f.savefig(f"graphics/sample{nb_tasks}.png")
     else:

@@ -141,7 +141,8 @@ class VAE(nn.Module):
         return x, mu, logsigma
     
     def sample(self, nb_samples: int, idx:int) -> torch.Tensor:
-        z = torch.normal(torch.zeros((nb_samples, self.z_dim)), torch.ones((nb_samples, self.z_dim)))
+        device = self.decoder.layers[0].W_mu.device
+        z = torch.normal(torch.zeros((nb_samples, self.z_dim)), torch.ones((nb_samples, self.z_dim))).to(device)
         x = self.decoder(z, idx)
         return x
     
