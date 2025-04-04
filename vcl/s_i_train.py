@@ -61,7 +61,7 @@ def training(model: SIMLP,
     else:
         logger = lambda x: x
     
-    for epoch in range(num_epochs):
+    for epoch in logger(range(num_epochs)):
         total_loss = 0
         omega_this_task = None
         for im, targets in dataloader:

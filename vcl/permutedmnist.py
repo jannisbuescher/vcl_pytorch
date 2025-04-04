@@ -28,6 +28,10 @@ class NormalMNIST(Dataset):
         image, label = self.mnist[idx]
         return image.view(-1), label
 
+transform = torchvision.transforms.Compose(
+    torchvision.transforms.ToTensor(),
+    torchvision.transforms.Normalize((0.1307,), (0.3081,))
+)
 
 
 class PermutedMNIST(Dataset):
@@ -42,7 +46,7 @@ class PermutedMNIST(Dataset):
             root=root,
             train=train,
             download=download,
-            transform=torchvision.transforms.ToTensor()
+            transform=transform
         )
         
         # Generate random permutation if none provided
